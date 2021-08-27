@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV File Download Exmaple</title>
+</head>
+<body>
+    <div className="App">
+        <p>JSON:</p>
+        <pre id='json'></pre>
+        <p>CSV:</p>
+        <pre id='csv'></pre>
+        <p>Download CSV File:</p>
+        <button type="button" id='uriDownload'>
+          Download File as URI
+        </button>
+        <button type="button" id='blobDownload'>
+          Download File as Blob
+        </button>
+      </div>
+    <script>
+        // Some example data to convert to CSV
+        const exampleData = [
+            {
+                jobId: "58d53ed0-bf05-4961-a32d-9cd3d3a5a207",
+                userId: "f219f5f2-a5ac-42b5-9637-f61a9c5c0502",
+                create_time: "2021-08-13T15:04:51+00:00",
+                successes: 42,
+                failures: 2,
+                inProgress: 0
+            },
+            {
+                jobId: "ace2e059-ebde-4270-84bc-54d4b217ce52",
+                userId: "f219f5f2-a5ac-42b5-9637-f61a9c5c0502",
+                create_time: "2021-08-14T11:24:62+00:00",
+                successes: 101,
+                failures: 4,
+                inProgress: 0
+            }
+        ];
+
+        // Convert an array of objects to a CSV string
+        const toCSVString = (array) => {
+            const keys = Object.keys(array[0]);
+            if (!keys || !keys.length) return '';
+            const headerRow = keys.join(",");
+            const dataRows = array.map((object) => Object.values(object).join(","));
+            return [headerRow, ...dataRows].join("\r\n");
+        };
+
+        // Create a CSV file string out of an arry of objects
+        const toCSVFileString = (array) => {
+            const csvContent = "data:text/csv;charset=utf-8,";
+            const rows = toCSVString(array);
+            return `${csvContent}${rows}`;
+        };
+
+        // Create a hidden link to download a file
+        const download = (href) => {
+            const link = document.createElement("a");
+            link.setAttribute("href", href);
+            link.setAttribute("download", "exampleData.csv");
+            link.style.visibility = "hidden";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Display example JSON data
+            const jsonPre = document.querySelector('#json');
+            jsonPre.innerHTML = JSON.stringify(exampleData, null, 2);
+
+            // Convert JSON to CSV formats
+            const csvFileString = toCSVFileString(exampleData);
+            const csvString = toCSVString(exampleData);
+            
+            // Display example CSV data
+            const csvPre = document.querySelector('#csv');
+            csvPre.innerHTML = csvString;
+
+            // Download CSV file as an encoded URI
+            const uriDownload = () => {
+                const encodedUri = encodeURI(csvFileString);
+                download(encodedUri)
+            };
+
+            // Download CSV file as a Blob
+            const blobDownload = () => {
+                const blob = new Blob(["\ufeff", csvString]);
+                const url = URL.createObjectURL(blob);
+                download(url)
+            };
+
+            // Hook up example download buttons
+            document.querySelector('#uriDownload').addEventListener('click', uriDownload);
+            document.querySelector('#blobDownload').addEventListener('click', blobDownload);
+        })
+    </script>
+</body>
+</html>
