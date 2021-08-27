@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #upload {
+            padding: 1rem 2rem;
+        }
+        
+        #upload:hover {
+            cursor: pointer;
+        }
+
+        #upload p:first-child {
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        #upload p:last-child {
+            color: #666;
+        }
+
+        .error {
+            color: red;
+        }
+        </style>
+    <title>File Upload Example</title>
+</head>
+<body>
+    <button id='upload' type='button'>
+        <p>Upload CSV</p>
+        <p>Drag and drop, or click to select a file</p>
+    </button>
+    <input id='input' type='file' name='csv' type='file' accept='text/csv' hidden/>
+    <pre id='output'></pre>
+    <script>
+        // Prevent default browser behavior during drag and drop events
+        const preventDefault = e => e.preventDefault()
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const uploadBtn = document.querySelector('#upload')
+            const fileInput = document.querySelector('#input')
+            const form = document.querySelector('#form')
+            const output = document.querySelector('#output')
+
+            // Trigger a click on the hidden file input when the Upload button is clicked
+            uploadBtn.addEventListener('click', () => {
+                fileInput.click()
+            })
+
+            // Handle dragging and dropping files onto the Upload button
+            uploadBtn.addEventListener('dragover', preventDefault)
+            uploadBtn.addEventListener('dragenter', preventDefault)
+            uploadBtn.addEventListener('drop', e => {
+                preventDefault(e)
+                const files = e.dataTransfer.files
+                // Only act if a file was dropped on the button
+                if (files && files.length) {
+                    // Have to catch multiple file errors manually, 
+                    // as this bypasses the "multiple" attribute on the input
+                    if (files.length > 1) {
+                        output.classList.add('error')
+                        output.innerHTML = 'ERROR: Please upload a single .csv file'
+                        return
+                    }
+                    const file = files[0]
+                    // Have to handle file type errors manually,
+                    // as this bypasses the "accepts" attribute on the input
+                    if (file.type !== 'text/csv') {
+                        output.classList.add('error')
+                        output.innerHTML = 'ERROR: File must be of type .csv'
+                        return
+                    }
+                    // Update the input element with the selected file and trigger a change event
+                    fileInput.files = files
+                    fileInput.dispatchEvent(new Event('change'))
+                }
+            })
+
+            // Handle changes to the file input, either by click or by drag and drop
+            fileInput.addEventListener('change', e => {
+                // Only act if there is a selected file
+                if (e.target.files && e.target.files.length === 1) {
+                    const file = e.target.files[0]
+                    // Have to handle file size errors manually, as there is no
+                    // attribute to limit this in the browser
+                    if (file.size > 1000 * 5) {
+                        output.classList.add('error')
+                        output.innerHTML = 'ERROR: File must be less than 5 KB in size'
+                        return
+                    }
+                    output.classList.remove('error')
+                    output.innerHTML = `Selected file: ${file.name} (${file.size / 1000} KB)`
+                }
+            })
+        })
+    </script>
+</body>
+</html>
