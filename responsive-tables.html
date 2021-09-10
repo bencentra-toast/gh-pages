@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Tables</title>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #example-1 {
+            margin: auto;
+            max-width: 1024px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+        }
+
+        thead tr {
+            border-bottom: 1px solid #ccc;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        .md-hide {
+            display: none;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        @media screen and (max-width: 768px) {
+            #example-1 .lg {
+                display: none;
+            }
+
+            #example-1 .md {
+                display: none;
+            }
+
+            #example-1 .md-hide {
+                display: table-cell;
+            }
+        }
+
+        @media screen and (max-width: 1024px) {
+            #example-1 .lg {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="example-1">
+        <h1>Example 1: Showing/Hiding Columns</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th class='lg'>Upload ID</th>
+                    <th class='right md'>Created</th>
+                    <th class='right md'>Attached</th>
+                    <th class='right md'>Updated</th>
+                    <th class='right md-hide'>Operations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>August 21, 2021</td>
+                    <td class='lg'>5abf524e-31b5-4c1b-a797-7a44d888d071</td>
+                    <td class='right md'>300</td>
+                    <td class='right md'>20</td>
+                    <td class='right md'>100</td>
+                    <td class='right md-hide'>420</td>
+                </tr>
+                <tr>
+                    <td>August 21, 2021</td>
+                    <td class='lg'>5abf524e-31b5-4c1b-a797-7a44d888d071</td>
+                    <td class='right md'>300</td>
+                    <td class='right md'>20</td>
+                    <td class='right md'>100</td>
+                    <td class='right md-hide'>420</td>
+                </tr>
+                <tr>
+                    <td>August 21, 2021</td>
+                    <td class='lg'>5abf524e-31b5-4c1b-a797-7a44d888d071</td>
+                    <td class='right md'>300</td>
+                    <td class='right md'>20</td>
+                    <td class='right md'>100</td>
+                    <td class='right md-hide'>420</td>
+                </tr>
+            </tbody>
+        </table>
+        <ul>
+            <li>Date column is always present</li>
+            <li>Upload ID column is only present on Desktop (&gt; 1024px)</li>
+            <li>Created, Attached, and Updated columns are present on Tablet and Desktop (&gt; 768px)</li>
+            <li>Operations column is only present on Mobile (&lt; 768px)</li>
+        </ul>
+    </div>
+</body>
+</html>
