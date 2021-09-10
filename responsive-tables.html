@@ -9,15 +9,20 @@
         * {
             font-family: sans-serif;
         }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
         
         html, body {
             margin: 0;
             padding: 0;
         }
 
-        #example-1 {
+        #example-1, #example-2 {
             margin: auto;
             max-width: 1024px;
+            padding: 4px;
         }
 
         table {
@@ -64,6 +69,14 @@
             #example-1 .lg {
                 display: none;
             }
+        }
+
+        #example-2 .scroll-horizontal {
+            overflow-x: scroll;
+        }
+
+        #example-2 table {
+            min-width: 800px;
         }
     </style>
 </head>
@@ -114,6 +127,46 @@
             <li>Created, Attached, and Updated columns are present on Tablet and Desktop (&gt; 768px)</li>
             <li>Operations column is only present on Mobile (&lt; 768px)</li>
         </ul>
+    </div>
+    <div id="example-2">
+        <h1>Example 2: Scrolling Container</h1>
+        <div class='scroll-horizontal'>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Upload ID</th>
+                        <th class="right">Created</th>
+                        <th class="right">Attached</th>
+                        <th class="right">Updated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>August 21, 2021</td>
+                        <td>5abf524e-31b5-4c1b-a797-7a44d888d071</td>
+                        <td class="right">300</td>
+                        <td class="right">20</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td>August 21, 2021</td>
+                        <td>5abf524e-31b5-4c1b-a797-7a44d888d071</td>
+                        <td class="right">300</td>
+                        <td class="right">20</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td>August 21, 2021</td>
+                        <td>5abf524e-31b5-4c1b-a797-7a44d888d071</td>
+                        <td class="right">300</td>
+                        <td class="right">20</td>
+                        <td class="right">100</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>This table scrolls horizontally on Mobile (below 800px), allowing the user to see the whole thing (a little bit at a time).</p>
     </div>
 </body>
 </html>
