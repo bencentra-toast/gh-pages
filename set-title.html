@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORIGINAL TITLE</title>
+</head>
+<body>
+    <button id="test">Click to reset tiitle on unload</button>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.title = 'Wow what a fancy new title'
+                console.log('new title set')
+            }, 1000)
+        })
+
+        document.querySelector('#test').addEventListener('click', () => {
+            // If we were navigating to another SPA via SingleSpa, we would want to
+            // reset the page title so it doesn't carry over accidentally!
+            window.addEventListener('beforeunload', () => {
+                document.title = 'ORIGINAL TITLE'
+                console.log('title reset')
+            })
+        })
+    </script>
+</body>
+</html>
